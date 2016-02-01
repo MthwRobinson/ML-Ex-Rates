@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  31 JAN 2016 18:24
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  31 JAN 2016 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -387,24 +387,20 @@ LaTeX Font Info:    Try loading font information for T1+ptm on input line 84.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
-)
-Overfull \hbox (4.80396pt too wide) in paragraph at lines 92--93
-\T1/aer/m/n/9 price dif-fer-en-tials are self-correcting be-cause as in-vestors
- move
- []
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
+] [2
 
 ] (./exchange_rates.aux) ) 
 Here is how much of TeX's memory you used:
  5063 strings out of 493304
  67343 string characters out of 6139870
- 162643 words of memory out of 5000000
+ 163643 words of memory out of 5000000
  8412 multiletter control sequences out of 15000+600000
  50688 words of font info for 70 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,10n,35p,977b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,10n,35p,1023b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8
 r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></u
@@ -417,10 +413,10 @@ ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type
 elvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
 8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on exchange_rates.pdf (1 page, 122351 bytes).
+Output written on exchange_rates.pdf (2 pages, 123650 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
