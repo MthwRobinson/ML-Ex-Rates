@@ -50,6 +50,7 @@
 %\usepackage{algorithm}
 \usepackage{algorithm2e}
 \usepackage[noend]{algpseudocode}
+\usepackage{eurosym}
 
 \begin{document}
 
@@ -64,7 +65,7 @@
 %\setcopyright{cagovmixed}
 
 
-\title{{Predicting Exchange Rates}
+\title{{Using Machine Learning to Set Exchange Rates for Medium Term Contracts}
 }
 \numberofauthors{2} 
 \author{
@@ -84,9 +85,19 @@ Matthew Robinson \\
 
 \section{Introduction}
 
-\section{Theoretical Framework}
+\subsection{Problem Definition}
+
+\subsection{Related Work}
 Research on equilibrium in foreign exchange markets is a well developed component of classical economic theory. Classical models rest on two fundamental ideas. The first is that foreign exchange markets achieve equilibrium when the rate of return on deposits is the same across all currencies. The idea that investors will be indifferent between bank deposits denominated in different currencies is known as interest rate parity. The second is that the price of goods will be the same when valued in different currencies. The notion that a basket of goods should cost the same in all currencies is known as purchasing power parity.
-\par{} 
+\par{} Both of these concepts rely on the same basic premise, which is that price differentials create arbitrage opportunities. Interest rate and purchasing power parity hold that price differentials are self-correcting because as investors move to take advantage of arbitrage opportunities, they push the market back toward equilibrium. To demonstrate this idea, suppose that a laptop costs \$500 in the United States and the Euro equivalent of \$550 in Germany. Someone in Germany could take advantage of this fact by buying cheap laptops in the US and selling them in Germany. This would create more demand for dollars, which are required to buy the laptops in the US, and push up US price levels. This trend could continue until price levels are high enough that laptops cost the same in the US as in Germany. When the prices of laptops are the same in both countries, the market is in equilibrium since there is no longer an opportunity for arbitrage.
+\par{} The following relationships summarize the relationship between exchange rates and interest rates under interest rate parity and the relationship between exchange rates and price levels under purchasing power parity, all else held equal. In these equations, $e_{t}$ represents the exchange rate at time $t$ in terms of the foreign currency, $i$ is the real interest rate and $\pi$ is the inflation rate.
+\begin{equation}
+e_{t+1} = e_{t} \left( \frac{1+i_{d}}{1+i_{f}} \right)
+\end{equation}
+\begin{equation}
+\frac{e_{t+1}-e_{t}}{e_{t}} = \frac{1+\pi_{d}}{1+\pi{f}} - 1
+\end{equation}
+\par{} Obstfeld and Taylor show that interest rate parity explains the behavior of exchange rates reasonably well in the long term. Frankel and Rose provide a similar result for purchasing power parity. The relevant time-frame for the \emph{long run} in this context is about four years. Under shorter time horizons, these models perform considerably less well. If fact, Meese and Rogoff famously demonstrated a random walk outperforms structural models for the exchange rate over a one to twelve month window.
 
 \section{Data}
 
@@ -114,9 +125,13 @@ Upper Saddle River, New Jersey: Pearson Education.
 ``Do purchasing power parity and uncovered interest rate parity hold in the long run? An example of likelihood inference in a multivariate time-series model.''.
 {\it Journal of Econometrics} 69: 211-240.
 
+\item Meese, R., and K. Rogoff. 1983.
+``Empirical exchange rate models of the seventies: Do they fit out of sample?.'' 
+{\it Journal of International Economics} 14: 3-24.
+
 \item Obstfeld, M., and A. Taylor. 2003.
 ``Globalization and capital markets.'' 
-{\it Globalization in historical perspective.}
+{\it Globalization in historical perspective}
 University of Chicago Press: 121-188.
 
 \item Wooldridge, J. 2009.
