@@ -58,7 +58,9 @@ trade_econ_data <- function(country, code, excode = 'NULL',
     start <- length(monthly)+2
     end <- start + length(quarterly)
     for( i in start:end){
-        df[,i] <- na.spline(df[,i])
+        if( sum(is.na(df[,i])) > 0 ){
+            df[,i] <- na.spline(df[,i])
+        }
     }
     
 
@@ -69,12 +71,141 @@ trade_econ_data <- function(country, code, excode = 'NULL',
     return(df)
 }
 
+# USA Data Frame
+usa <- trade_econ_data(country = 'usa', code = 'USA', excode = 'NULL',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_d','BOT_d',
+                                  'Yield_d','FER_d','Int_d','PrimeRate_d','GDPG_d',
+                                  'CA_d','FDI_d','Country'))
+
+# Euro-zone Data Frame
+# No GYLD or BLR data
+euro <- trade_econ_data(country = 'europe', code = 'EUR', excode = 'EXUSEU',
+                            monthly = c('CPIC','BOT','FER','IR'),
+                            quarterly = c('GGR','CA'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'FER_f','Int_f','GDPG_f',
+                                  'CA_f','Exchange','Country'))
+euro$Exchange <- 1/euro$Exchange
+setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Data')
+write.csv(euro, file = 'europe.csv')
+
+# Australia Data Frame
+# No BLR data
 aus <- trade_econ_data(country = 'australia', code = 'AUS', excode = 'EXUSAL',
                             monthly = c('CPIC','BOT','GYLD','FER','IR'),
                             quarterly = c('GGR','CA','FDI'), 
                     col_names = c('Date','Infl_f','BOT_f',
                                   'Yield_f','FER_f','Int_f','GDPG_f',
                                   'CA_f','FDI_f','Exchange','Country'))
+aus$Exchange <- 1/aus$Exchange
+setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Data')
+write.csv(euro, file = 'australia.csv')
+
+# Canada Data Frame
+can <- trade_econ_data(country = 'canada', code = 'CAN', excode = 'EXCAUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f','PrimeRate_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# Denmark Data Frame
+# No BLR, FDI data
+den <- trade_econ_data(country = 'denmark', code = 'DNK', excode = 'EXDNUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR'),
+                            quarterly = c('GGR','CA'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f',
+                                  'GDPG_f','CA_f','Exchange','Country'))
+
+# Japan Data Frame
+jap <- trade_econ_data(country = 'japan', code = 'JPN', excode = 'EXJPUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f','PrimeRate_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# Korea Data Frame
+korea <- trade_econ_data(country = 'korea', code = 'KOR', excode = 'EXKOUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f','PrimeRate_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# Mexico Data Frame
+# No BLR data
+mex <- trade_econ_data(country = 'mexico', code = 'MEX', excode = 'EXMXUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# New Zealand Data Frame
+nzl <- trade_econ_data(country = 'new_zealand', code = 'NZL', excode = 'EXUSNZ',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f','PrimeRate_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+nzl$Exchange <- 1/nzl$Exchange
+setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Data')
+write.csv(nzl, file = 'new_zealand.csv')
+
+# Norway Data Frame
+# No BLR or FDI data
+nor <- trade_econ_data(country = 'norway', code = 'NOR', excode = 'EXNOUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR'),
+                            quarterly = c('GGR','CA'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f',
+                                  'GDPG_f','CA_f','Exchange','Country'))
+
+# Sweden Data Frame
+# No BLR data
+swe <- trade_econ_data(country = 'sweden', code = 'SWE', excode = 'EXSZUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# Switzerland Data Frame
+# No BLR data
+switz <- trade_econ_data(country = 'switzerland', code = 'CHE', excode = 'EXSZUS',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f',
+                                  'GDPG_f','CA_f','FDI_f','Exchange','Country'))
+
+# United Kingdom Data Frame
+uk <- trade_econ_data(country = 'uk', code = 'GBR', excode = 'NULL',
+                            monthly = c('CPIC','BOT','GYLD','FER','IR','BLR'),
+                            quarterly = c('GGR','CA','FDI'), 
+                    col_names = c('Date','Infl_f','BOT_f',
+                                  'Yield_f','FER_f','Int_f','PrimeRate_f',
+                                  'GDPG_f','CA_f','FDI_f','Country'))
+exchange <- Quandl("FED/RXI_US_N_M_UK", start_date = '1971-01-01')
+uk$Exchange <- 1/exchange$Value
+setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Data')
+write.csv(uk, file = 'uk.csv')
+
+# Need to find monthly exchange rate data for
+# Czech Republic
+# Hungary
+# Iceland
+# Poland
+# Turkey
+
+
+
+'''
+Original ad-hoc code to produce the USA data frame
 
 # US Data Frame
 
@@ -130,5 +261,6 @@ usa$FDI_d <- na.spline(usa$FDI_d)
 
 setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Data')
 write.csv(usa, file = 'usa.csv')
+'''
 
 
