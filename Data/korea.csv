@@ -1,4 +1,4 @@
-"","Date","Infl_f","BOT_f","Yield_f","FER_f","Int_f","PrimeRate_f","1Y_Yield","GDPG_f","CA_f","FDI_f","Exchange","Country"
+"","Date","Infl_f","BOT_f","Yield_f","FER_f","Int_f","PrimeRate_f","1Y_Yield_f","GDPG_f","CA_f","FDI_f","Exchange","Country"
 "1",1971-02-01,15.9,-70.63,NA,593.8,NA,NA,-0.308949384788403,2614352.48145059,-11202.1180132671,12030719.3305451,NA,"korea"
 "2",1971-03-01,15.9,-144.84,NA,566.5,NA,NA,1.68950666583773,2545154.35518911,1307.77501691538,11962556.5954521,NA,"korea"
 "3",1971-04-01,15.5,-95.47,NA,570,NA,NA,2.9,2477186.51811984,9105,11894651.8081715,NA,"korea"

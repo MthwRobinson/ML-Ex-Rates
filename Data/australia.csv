@@ -1,4 +1,4 @@
-"","Date","Infl_f","BOT_f","FER_f","Int_f","1Y_Yield","GDPG_f","CA_f","Exchange","Country"
+"","Date","Infl_f","BOT_f","FER_f","Int_f","1Y_Yield_f","GDPG_f","CA_f","Exchange","Country"
 "1",1991-02-01,3.9,NA,NA,NA,734.185777288831,-55806.140771259,42491.4186840197,NA,"europe"
 "2",1991-03-01,4.1,NA,NA,NA,696.992219754462,-53704.9284481767,40925.8549669192,NA,"europe"
 "3",1991-04-01,3.9,NA,NA,NA,661.07460601531,-51657.065853188,39399.2202842124,NA,"europe"
