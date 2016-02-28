@@ -16,6 +16,17 @@ library(lattice)
 #setwd('/home/matt/MSOR/ISYE7406/ML-Ex-Rates/Results')
 #write.csv(ex_rate, file = 'topfive.csv')
 
+ex_rates <- read.csv('topfive.csv')
+ex_rates <- subset(ex_rates, ex_rate$Country.y=='canada')
+    
+full <- subset(ex_rates, select = c(Pct_Chg, Exchange, X1Y_Yield_d, 
+                      X1Y_Yield_f, Int_d, Int_f,  Infl_d, Infl_f, GDPG_d,
+                      GDPG_f, BOT_f, BOT_d, FER_f))
+full <- na.omit(full)
+struct <- subset(full, select = c(Pct_Chg, Exchange, X1Y_Yield_d, 
+                      X1Y_Yield_f, Int_d, Int_f,  Infl_d, Infl_f))
+rownames(full) <- 1:nrow(full)
+
 test_lin_models('canada',100)
 test_lin_models('europe',100)
 test_lin_models('mexico',100)
