@@ -56,9 +56,9 @@
 
 
 % Copyright
-%\setcopyright{acmcopyright}
+%setcopyright{acmcopyright}
 %\setcopyright{acmlicensed}
-%\setcopyright{rightsretained}
+\setcopyright{rightsretained}
 %\setcopyright{usgov}
 %\setcopyright{usgovmixed}
 %\setcopyright{cagov}
@@ -86,10 +86,7 @@ Matthew Robinson \\
 \section{Introduction}
 International business involves considerable risk. This is especially true for manufacturers, who often make production decisions well in advance of delivery dates. Consider the position of an airline that is preparing to expand its fleet. Such an airline might place an order for a passenger jet that will not be completed for a year or more, with payment due upon delivery of the jet. If the buyer is American and the manufacturer is also American, this is not a problem. All of the manufacturers production costs will be valued in US dollars, and the customer will pay in US dollars.
 \par{} In contrast, consider the situation if the buyer is Canadian and the manufacturer is American. Since the manufacturer is American, the Canadian firm must pay for the jet in US dollars. Suppose the value of the US dollar appreciates 10\% relative to the Canadian dollar while the American firm is filling the order. Then, when the Canadian firm pays for the jet, it is 10\% more expensive in terms of Canadian dollars than when it ordered it. If the movement were in the opposite direction, the manufacturer would receive 10\% fewer US dollars for the jet than it expected when it was ordered. Clearly, both firms would be interested in predicting adverse currency movements in advance, and may be interested in writing expected future currency valuations into contracts. 
-\par{} This paper seeks to resolve this dilemma by estimating a model that predicts the percent change in the exchange rate after one year, using only information that is currently available. The remainder of this section will provide an explicit problem definition, as well as an overview of prevailing economic theory and past statistical research on exchange rates. In the following section, we explain the data set and data sources. Next, we develop several models for predicting exchange rates and compare their effectiveness. Finally, we conclude by suggesting the most effective means to predict exchange rates and possible directions for future research.
-
-\subsection{Problem Definition}
-
+\par{} In order to resolve this dilemma, we estimate several models that predict the percent change in the exchange rate after one year, using only information that is currently available. The predictors for these models include the current exchange rate, the interest rate, inflation rate and government bond yield for both countries, and several variables related to international trade and financial flows. The remainder of this section will provide an overview of relevant economic theory, a summary of past statistical research on exchange rates and an overview of the data set. In the following section, we perform exploratory data analysis to develop a basic understanding of the trends in the data set. Next, we develop several models for predicting exchange rates and compare their effectiveness. Finally, we conclude by suggesting the most effective means to predict exchange rates and possible directions for future research.
 
 \subsection{Related Work}
 Research on equilibrium in foreign exchange markets is a well developed component of classical economic theory. Classical models rest on two fundamental ideas. The first is that foreign exchange markets achieve equilibrium when the rate of return on deposits is the same across all currencies. The idea that investors will be indifferent between bank deposits denominated in different currencies is known as interest rate parity. The second is that the price of goods will be the same when valued in different currencies. The notion that a basket of goods should cost the same in all currencies is known as purchasing power parity.
@@ -110,11 +107,49 @@ This paper restricts its attention to changes in the exchange rate between the U
 
 \section{Exploratory Data Analysis}
 
+\subsection{Tests for Autocorrelation}
+Time series data often exhibits autocorrelation. Autocorrelation refers to correlation between values of a variable at different points in time. In order to assess the degree of autocorrelation in the exchange rate data set, we fit a simplified linear model that consisted of the current exchange rate, along with the interest rate, inflation rate and government bond yield for both countries. After fitting the model, we computed the Durbin-Watson test statistic with one to twelve month lags. Figure 1 depicts the value of the correlation coefficient for each country as a function of time.
+\par{} The test statistics show that the data set exhibits strong autocorrelation for several months, and that the severity of the autocorrelation decays over time. For each country, the correlation coefficient for a one month lag is in excess of 0.80, and is as high as 0.95 for Japan. This value drops below 0.50 for every country by month four, with the exception of Japan. The persistence of autocorrelation in the case of Japan may be due to its active currency manipulation policy. For each country, the correlation coefficient remains statistically significant for at least five months. The presence of autocorrelation in the data set argues for including lagged variables in the model, through at least several months.
+
+\begin{figure}
+\centering
+\caption{Severity of Autocorrelation}
+\includegraphics[scale=0.55]{autocorrelation.pdf}
+\end{figure}
+
+%\begin{figure}
+%\centering
+%\caption{Durbin-Watson Test -- Canada}
+%\begin{tabular}{c c c c}
+%Lag & Autocorrelation & D-W Statistic & p-value \\
+%1 & 0.8421 & 0.2975 & 0.000 \\
+%2 & 0.6337 & 0.6994 & 0.000 \\
+%3 & 0.4381 & 1.0782 & 0.000 \\
+%4 & 0.2848 & 1.3816 & 0.000 \\
+%5 & 0.1718 & 1.6064 & 0.014 \\
+%6 & 0.0814 & 1.7851 & 0.254 \\
+%\end{tabular}
+%\end{figure}
+
+%\begin{figure}
+%\centering
+%\caption{Durbin-Watson Test -- Japan}
+%\begin{tabular}{c c c c}
+%Lag & Autocorrelation & D-W Statistic & p-value \\
+%1 & 0.9314 & 0.1370 & 0.000 \\
+%2 & 0.8477 & 0.3041 & 0.000 \\
+%3 & 0.7660 & 0.4671 & 0.000 \\
+%4 & 0.6799 & 0.6388 & 0.000 \\
+%5 & 0.5959 & 0.8048 & 0.000 \\
+%6 & 0.5164 & 0.9615 & 0.000 \\
+%\end{tabular}
+%\end{figure}
+
 \section{Methods}
 
 \subsection{Training and Test Sets}
-Evaluating the effectiveness of the methods described above required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. In order to effectively form the training and test sets, two aspects of the data required consideration: potential autocorrelation and the size of the data set.
-\par{} Autocorrelation in time series data set refers to correlation between values of a variable at different points in time. Since the economic variables in the data set are heavily correlated over time, this means that the data set cannot be split between training and test sets simply by randomly separating the data. To illustrate the nature of the problem, suppose that an observation from May 2012 is randomly assigned to the training set and an observation from June 2012 is randomly assigned to the test set. Since the May and June observations are correlated, a model that overfits the training data might perform artificially well on the test set because the training set contains observations that are similar to observations in the test set. In order to circumvent this problem, the test set was chosen by selecting a continuous block of time with a random start date.
+Evaluating the effectiveness of the different models required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. In order to effectively form the training and test sets, two aspects of the data required consideration: potential autocorrelation and the size of the data set.
+\par{} As discussed above, the data set used in this paper exhibits autocorrelation that remains significant for at least several months. Since the economic variables in the data set are heavily correlated over time, this means that the data set cannot be split between training and test sets simply by randomly separating the data. To illustrate the nature of the problem, suppose that an observation from May 2012 is randomly assigned to the training set and an observation from June 2012 is randomly assigned to the test set. Since the May and June observations are correlated, a model that overfits the training data might perform artificially well on the test set because the training set contains observations that are similar to observations in the test set. In order to circumvent this problem, the test set was chosen by selecting a continuous block of time with a random start date.
 \par{} Since this paper considers monthly data, the number of observations in each time series is on the order of hundreds, ranging from 121 for Mexico to 459 for Japan. Due to the relatively low number of observations in the data set, a true appraisal of the effectiveness of each method requires an evaluation of its performance over a large number of random partitions. In order to accomplish this, we randomly selected 100 start points for each data set and computed the training error for each method at each start point. The same 100 start points were used for each method. This allows us to test the hypothesis that one method outperforms another by conducting pairwise two sample statistical tests. Using many randomly selected start dates has the added advantage of providing more variability for the test sets. Since continuous blocks of time are correlated, the peculiarities of a particular block of time may provide a distorted view of the effectiveness of a given method if only one block of time is used. As a result, using a continuous block of time with many randomly selected start points is a reasonable method for splitting the data between training and test sets.
 
 \section{Results}
