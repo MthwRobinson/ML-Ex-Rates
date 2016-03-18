@@ -109,13 +109,14 @@ This paper restricts its attention to changes in the exchange rate between the U
 \section{Exploratory Data Analysis}
 
 \subsection{Tests for Autocorrelation}
-Time series data often exhibits autocorrelation. Autocorrelation refers to correlation between values of a variable at different points in time. In order to assess the degree of autocorrelation in the exchange rate data set, we fit a simplified linear model that consisted of the current exchange rate, along with the interest rate, inflation rate and government bond yield for both countries. After fitting the model, we computed the Durbin-Watson test statistic with one to twelve month lags. Figure 1 depicts the value of the correlation coefficient for each country as a function of time.
+Time series data often exhibits autocorrelation. Autocorrelation refers to correlation between values of a variable at different points in time. In order to assess the degree of autocorrelation in the exchange rate data set, we fit a simplified linear model that consisted of the current exchange rate, along with the interest rate, inflation rate and government bond yield for both countries. After fitting the model, we computed the Durbin-Watson test statistic with one to twelve month lags. Figure~\ref{fig:autocorrelation} depicts the value of the correlation coefficient for each country as a function of time.
 \par{} The test statistics show that the data set exhibits strong autocorrelation for several months, and that the severity of the autocorrelation decays over time. For each country, the correlation coefficient for a one month lag is in excess of 0.80, and is as high as 0.95 for Japan. This value drops below 0.50 for every country by month four, with the exception of Japan. The persistence of autocorrelation in the case of Japan may be due to its active currency manipulation policy. For each country, the correlation coefficient remains statistically significant for at least five months. The presence of autocorrelation in the data set argues for including lagged variables in the model, through at least several months.
 
 \begin{figure}
 \centering
 \caption{Severity of Autocorrelation}
 \includegraphics[scale=0.55]{autocorrelation.pdf}
+\label{fig:autocorrelation}
 \end{figure}
 
 %\begin{figure}
@@ -147,13 +148,34 @@ Time series data often exhibits autocorrelation. Autocorrelation refers to corre
 %\end{figure}
 
 \section{Methods}
+Constructing a model to predict exchanges requires the consideration of three important factors: which variables to include in the model, candidate methods for estimating the model and the criteria for evaluating each method. The variable selection process involves deciding which economic factors to include in the model, as well as how many months of lagged observations to include for each factor. Candidate methods were chosen by considering several statistical techniques with properties that made them appealing for the exchange rate data set. Finally, a method for evaluating the candidate solutions that accounts for autocorrelation in the data set is developed.
 
-\subsection{Training and Test Sets}
-Evaluating the effectiveness of the different models required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. In order to effectively form the training and test sets, two aspects of the data required consideration: potential autocorrelation and the size of the data set.
-\par{} As discussed above, the data set used in this paper exhibits autocorrelation that remains significant for at least several months. Since the economic variables in the data set are heavily correlated over time, this means that the data set cannot be split between training and test sets simply by randomly separating the data. To illustrate the nature of the problem, suppose that an observation from May 2012 is randomly assigned to the training set and an observation from June 2012 is randomly assigned to the test set. Since the May and June observations are correlated, a model that overfits the training data might perform artificially well on the test set because the training set contains observations that are similar to observations in the test set. In order to circumvent this problem, the test set was chosen by selecting a continuous block of time with a random start date.
+\subsection{Variable Selection}
+Selecting which variables to include in the model requires deciding which economic factors are relevant and for how many months prior to the current observation. To recap, the variables in the data set include the current exchange, interest, inflation and GDP growth rates, as well as several variables related to international financial flows. There is a strong theoretical justification for including each of these variables in the model. Nevertheless, overfitting is potentially problematic due to the small size of the data set, especially after the inclusion of lagged variables. The proper lag was selected by comparing the performance of a linear regression model across a variety of lag values. For each lag value, the variables were chosen by forward stepwise variable selection, using AIC as the selection criteria. Specifying the model in this manner allows us to balance the trade off between training error and model complexity.
+
+\subsection{Method Evaluation}
+Evaluating the effectiveness of the candidate solution required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. In order to effectively form the training and test sets, two aspects of the data required consideration: autocorrelation and the size of the data set.
+\par{} As discussed above, the data set used in this paper exhibits autocorrelation that remains significant for at least several months. Since the economic variables in the data set are heavily correlated over time, this means that the data set cannot be split between training and test sets simply by separating the data randomly. To illustrate the nature of the problem, suppose that an observation from May 2012 is randomly assigned to the training set and an observation from June 2012 is randomly assigned to the test set. Since the May and June observations are correlated, a model that overfits the training data might perform artificially well on the test set because the training set contains observations that are similar to observations in the test set. In order to circumvent this problem, the test set was chosen by selecting a continuous block of time with a random start date. Additionally, six months of data before and after the test block was discarded. This data was used in neither the training nor the test set in order to ensure that the observations in the test set were as independent as possible from the observations in the training set.
 \par{} Since this paper considers monthly data, the number of observations in each time series is on the order of hundreds, ranging from 121 for Mexico to 459 for Japan. Due to the relatively low number of observations in the data set, a true appraisal of the effectiveness of each method requires an evaluation of its performance over a large number of random partitions. In order to accomplish this, we randomly selected 100 start points for each data set and computed the training error for each method at each start point. The same 100 start points were used for each method. This allows us to test the hypothesis that one method outperforms another by conducting pairwise two sample statistical tests. Using many randomly selected start dates has the added advantage of providing more variability for the test sets. Since continuous blocks of time are correlated, the peculiarities of a particular block of time may provide a distorted view of the effectiveness of a given method if only one block of time is used. As a result, using a continuous block of time with many randomly selected start points is a reasonable method for splitting the data between training and test sets.
 
 \section{Results}
+
+\subsection{Determining the Optimal Lag}
+The lag was determined by considering the performance of a standard linear regression model with a variety of lags. Since we want the simplest model specification that provides accurate predictions, we choose the point at which including an additional month of lag stops improving the performance of the model. This is accomplished by plotting the mean training error of the model as a function of the lag. These plots appear in Figures ~\ref{fig:lag1} and ~\ref{fig:lag2}. The optimal lag values vary by country. Noticeable improvements in the performance of the model cease after month four for Canada and month five for Mexico. The results justify including lagged variables out to nine months for Europe, Japan and Korea. In the case of Korea, the decision to include a lengthy lag on the variables is less clear cut, since the model also performs well with shorter lags. However, the mean testing error decreases by a factor of two after the ninth month is included, making the increased complexity of the model worthwhile.
+
+\begin{figure}
+\centering
+\caption{Model Performance for Various Lags}
+\includegraphics[scale=0.45]{lag1.pdf}
+\label{fig:lag1}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Model Performance for Various Lags}
+\includegraphics[scale=0.45]{lag2.pdf}
+\label{fig:lag2}
+\end{figure}
 
 \section{Findings}
      
@@ -169,6 +191,10 @@ Evaluating the effectiveness of the different models required splitting the data
 ``A panel project on purchasing power parity: mean reversion within and between countries.''
 {\it Journal of International Economics} 40: 209-224.
 
+\item Hsieh, D. 1989
+``Testing for Nonlinear Dependence in Daily Foreign Exchange Rate Changes.''
+{\it Journal of Business} 62: 329-368.
+
 \item Krugman, P., M. Obstfeld and M.Melitz.  2014.
 {\it International Economics: Theory and Policy}. 10th ed.
 Upper Saddle River, New Jersey: Pearson Education.
@@ -177,9 +203,17 @@ Upper Saddle River, New Jersey: Pearson Education.
 ``Do purchasing power parity and uncovered interest rate parity hold in the long run? An example of likelihood inference in a multivariate time-series model.''.
 {\it Journal of Econometrics} 69: 211-240.
 
+\item Lyons, K.R. and M.D.D. Evans. 2002
+``Order Flow and Exchange Rate Dynamics.''
+{\it Journal of Political Economy} 110: 170-180
+
 \item Meese, R., and K. Rogoff. 1983.
 ``Empirical exchange rate models of the seventies: Do they fit out of sample?.'' 
 {\it Journal of International Economics} 14: 3-24.
+
+\item Meese, R.A. and A.K. Rose. 1990
+``Nonlinear, Nonparametric, Nonessential Exchange Rate Estimation.''
+{\it The American Economic Review} 80: 192-196 
 
 \item Obstfeld, M., and A. Taylor. 2003.
 ``Globalization and capital markets.'' 
@@ -190,17 +224,11 @@ University of Chicago Press: 121-188.
 {\it Introductory Econometrics}. 4th Ed.
 Mason, Ohio: South-Western Cengage Learning.
 
-\item Hsieh, D. 1989
-``Testing for Nonlinear Dependence in Daily Foreign Exchange Rate Changes.''
-{\it Journal of Business} 62: 329-368.
 
-\item Meese, R.A. and A.K. Rose. 1990
-``Nonlinear, Nonparametric, Nonessential Exchange Rate Estimation.''
-{\it The American Economic Review} 80: 192-196 
 
-\item Lyons, K.R. and M.D.D. Evans. 2002
-``Order Flow and Exchange Rate Dynamics.''
-{\it Journal of Political Economy} 110: 170-180
+
+
+
 
 \item Panda, C. and V. Narasimhan 2007
 ``Forecasting exchange rate better with artificial neural network.''
