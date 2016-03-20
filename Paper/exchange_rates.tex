@@ -153,15 +153,19 @@ Constructing a model to predict exchanges requires the consideration of three im
 \subsection{Variable Selection}
 Selecting which variables to include in the model requires deciding which economic factors are relevant and for how many months prior to the current observation. To recap, the variables in the data set include the current exchange, interest, inflation and GDP growth rates, as well as several variables related to international financial flows. There is a strong theoretical justification for including each of these variables in the model. Nevertheless, overfitting is potentially problematic due to the small size of the data set, especially after the inclusion of lagged variables. The proper lag was selected by comparing the performance of a linear regression model across a variety of lag values. For each lag value, the variables were chosen by forward stepwise variable selection, using AIC as the selection criteria. Specifying the model in this manner allows us to balance the trade off between training error and model complexity.
 
-\subsection{Method Evaluation}
+\subsection{Candidate Methods}
+After selecting a suitable subset of variables to include in the model, we fit the model using several statistical techniques. These techniques include standard linear regression, ridge regression, LASSO regression and principal components regression. Ridge regression and LASSO regression both include a regularization constant that gives preferences to models with smaller parameters in terms of absolute value. These models are appealing for the exchange rate data set because autocorrelation and the inclusion of lagged variables means the predictors in the model are highly correlated, meaning multicollinearity is a potential problem. Including a regularization constant helps prevent overfitting to the training data. For both of these models, the regularization constant is chosen using generalized cross validation. Principal component regression is potentially useful due to the large number of predictors in the model and the high correlation between those predictors. The forward stepwise variable technique described above results in models with 10-20 predictors, which is relatively complex for a data set that has on the order of hundreds of observations. Principal component regression simplifies the model by considering a low rank approximation of the data set that consists of the $k$ most important principal components. The number of components to include in the principal component regression was also chosen using cross validation. 
+
+\subsection{Model Evaluation}
 Evaluating the effectiveness of the candidate solution required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. In order to effectively form the training and test sets, two aspects of the data required consideration: autocorrelation and the size of the data set.
 \par{} As discussed above, the data set used in this paper exhibits autocorrelation that remains significant for at least several months. Since the economic variables in the data set are heavily correlated over time, this means that the data set cannot be split between training and test sets simply by separating the data randomly. To illustrate the nature of the problem, suppose that an observation from May 2012 is randomly assigned to the training set and an observation from June 2012 is randomly assigned to the test set. Since the May and June observations are correlated, a model that overfits the training data might perform artificially well on the test set because the training set contains observations that are similar to observations in the test set. In order to circumvent this problem, the test set was chosen by selecting a continuous block of time with a random start date. Additionally, six months of data before and after the test block was discarded. This data was used in neither the training nor the test set in order to ensure that the observations in the test set were as independent as possible from the observations in the training set.
-\par{} Since this paper considers monthly data, the number of observations in each time series is on the order of hundreds, ranging from 121 for Mexico to 459 for Japan. Due to the relatively low number of observations in the data set, a true appraisal of the effectiveness of each method requires an evaluation of its performance over a large number of random partitions. In order to accomplish this, we randomly selected 100 start points for each data set and computed the training error for each method at each start point. The same 100 start points were used for each method. This allows us to test the hypothesis that one method outperforms another by conducting pairwise two sample statistical tests. Using many randomly selected start dates has the added advantage of providing more variability for the test sets. Since continuous blocks of time are correlated, the peculiarities of a particular block of time may provide a distorted view of the effectiveness of a given method if only one block of time is used. As a result, using a continuous block of time with many randomly selected start points is a reasonable method for splitting the data between training and test sets.
+\par{} Since this paper considers monthly data, the number of observations in each time series is on the order of hundreds, ranging from 121 for Mexico to 459 for Japan. Due to the relatively low number of observations in the data set, a true appraisal of the effectiveness of each method requires an evaluation of its performance over a large number of random partitions. In order to accomplish this, we randomly selected 100 start points for each data set and computed the training error for each method at each start point. The same 100 start points were used for each method. This allows us to test the hypothesis that one method outperforms another by conducting pairwise two sample t-tests. Using many randomly selected start dates has the added advantage of providing more variability for the test sets. Since continuous blocks of time are correlated, the peculiarities of a particular block of time may provide a distorted view of the effectiveness of a given method if only one block of time is used. As a result, using a continuous block of time with many randomly selected start points is a reasonable method for splitting the data between training and test sets.
+\par{} The mean squared testing error over the 100 random partitions of the data set is used as a basis for comparing models. For brevity, we will refer to this value as the mean testing error in this paper. In all cases, two sample t-tests are used to determine whether the difference between two models is statistically significant. Comparison against a random walk, which predicts no change in the exchange rate after one year, is used as a benchmark for determining whether or not the model's predictions are useful.
 
 \section{Results}
 
 \subsection{Determining the Optimal Lag}
-The lag was determined by considering the performance of a standard linear regression model with a variety of lags. Since we want the simplest model specification that provides accurate predictions, we choose the point at which including an additional month of lag stops improving the performance of the model. This is accomplished by plotting the mean training error of the model as a function of the lag. These plots appear in Figures ~\ref{fig:lag1} and ~\ref{fig:lag2}. The optimal lag values vary by country. Noticeable improvements in the performance of the model cease after month four for Canada and month five for Mexico. The results justify including lagged variables out to nine months for Europe, Japan and Korea. In the case of Korea, the decision to include a lengthy lag on the variables is less clear cut, since the model also performs well with shorter lags. However, the mean testing error decreases by a factor of two after the ninth month is included, making the increased complexity of the model worthwhile.
+The lag was determined by considering the performance of a standard linear regression model with a variety of lags. Since we want the simplest model specification that provides accurate predictions, we choose the point at which including an additional month of lag stops improving the performance of the model. This is accomplished by plotting the mean training error of the model as a function of the lag. These plots appear in Figures ~\ref{fig:lag1} and ~\ref{fig:lag2}. 
 
 \begin{figure}
 \centering
@@ -177,7 +181,32 @@ The lag was determined by considering the performance of a standard linear regre
 \label{fig:lag2}
 \end{figure}
 
+\par{} The optimal lag varies by country. Noticeable improvements in the performance of the model cease after month four for Canada and month five for Mexico. The results justify including lagged variables out to nine months for Europe, Japan and Korea. In the case of Korea, the decision to include a lengthy lag on the variables is less clear cut, since the model also performs well with shorter lags. However, the mean testing error decreases by a factor of two after the ninth month is included, making the increased complexity of the model worthwhile.
+\par{} Including lagged variables results in a large number of possible predictors for each model. Using the lags chosen above, there are 42 possible predictors for the Canada model, 49 for the Mexico model and 77 each for the Europe, Japan and Korea models. The variables used to predict the percent change in the exchange rate were chosen by forward stepwise variable selection, as described in the methods section. These variables and their lags appear in the appendix. Of note is that at least 9 of the 12 variables in the data set appear in each of the final models chosen by forward stepwise variable selection. In addition, each variable appeared in at least two of the models. This indicates that each variable is useful as a predictor of exchange rates, as economic theory suggests they should be.
+
+\subsection{Method Comparison}
+
+The mean testing errors for the 100 random partitions of the data set appear in Figure~\ref{tab:comparison} for each country and estimation technique. The naive estimate is a random walk and always predicts no change in the exchange rate after one year. This estimate is used as a baseline for assessing the usefulness of the statistical models. Each of the estimation techniques outperformed the naive estimation. The improvement in predictive power ranged from a factor of two for Japan to a factor of ten for Mexico. For each method, we tested the hypothesis that mean testing error for the model is less than the mean testing error for the random walk using a pairwise two sample t-test. The results were statistically significant at well below the 1\% significance level.
+
+\begin{figure}
+\centering
+\caption{Mean Testing Error}
+\begin{tabular}{l l l l l l}
+Country	& Standard 	& Ridge 		& Lasso 		& PCR 		& Naive \\
+Canada 	& 0.001374 	& 0.001395 	& 0.001409 	& 0.001532 	& 0.00636 \\
+Europe	& 0.004150 	& 0.004389 	& 0.004343 	& 0.003869 	& 0.01159 \\
+Mexico	& 0.001418 	& 0.001499 	& 0.001735 	& 0.001483  & 0.01146 \\
+Japan	& 0.009847 	& 0.009840 	& 0.009622 	& 0.009602  & 0.02058 \\
+Korea	& 0.002919 	& 0.002931 	& 0.003109 	& 0.002519 	& 0.01288 \\
+\end{tabular}
+\label{tab:comparison}
+\end{figure}
+
+\par{} A noteworthy observation from the results table is that the mean testing error for each model is robust to the technique used to estimate the model. For each country, we tested the hypothesis that the mean testing errors for the ridge, LASSO and principal component regressions were different than the mean testing error for the standard linear model. Although the differences were statistically significant in some cases, the magnitude of the difference was very small in every case. In practice, this means that each of the models will produce similar results. Since using more sophisticated regression techniques does not improve the performance of the model, these results support estimating the model using a standard linear regression. In fact, the primary difficulty in producing a good model is not selecting the best estimation technique, but rather choosing the correct predictors. While the results were robust to the estimation technique, they were highly sensitive to the variables included in the model, particularly the months of lag. This makes preliminary work to determine a close to optimal lag value vital to producing a useful model for predicting exchange rates.
+
 \section{Findings}
+
+
      
 % hangref environment
 \newenvironment{hangref}{\begin{list}{}{\setlength{\itemsep}{0pt}
@@ -220,27 +249,125 @@ Upper Saddle River, New Jersey: Pearson Education.
 {\it Globalization in historical perspective}
 University of Chicago Press: 121-188.
 
-\item Wooldridge, J. 2009.
-{\it Introductory Econometrics}. 4th Ed.
-Mason, Ohio: South-Western Cengage Learning.
-
-
-
-
-
-
-
 \item Panda, C. and V. Narasimhan 2007
 ``Forecasting exchange rate better with artificial neural network.''
 {\it Journal of Policy Modeling} 29: 227-236
 
-
-
-
+\item Wooldridge, J. 2009.
+{\it Introductory Econometrics}. 4th Ed.
+Mason, Ohio: South-Western Cengage Learning.
 
 \end{hangref}
 
 \clearpage
+
+
+\begin{figure}
+\centering
+\caption{Variables and Lags -- Canada}
+\begin{tabular}{l l}
+Variable 					& Lags  \\
+Exchange Rate 				& 0,2,4		\\
+Domestic Bond Yield			& 1,2,3,4		\\
+Foreign Bond Yield			& 0,1,3,4		\\
+Domestic Interest Rate		& 0,3,4		\\
+Foreign Interest Rate		& 0,2		\\
+Domestic Inflation Rate		& 2,4		\\
+Foreign Inflation Rate		& 0,3,4		\\
+Domestic GDP Growth			& 0		\\
+Foreign GDP Growth			& 0		\\
+Domestic Balance of Trade	& 0		\\
+Foreign Balance of Trade		& None		\\
+Foreign Exchange Reserves	& 0		\\
+\end{tabular}
+\label{tab:canada_vars}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Variables and Lags -- Europe}
+\begin{tabular}{l l}
+Variable 					& Lags  \\
+Exchange Rate 				& 0,9		\\
+Domestic Bond Yield			& 0,5,7		\\
+Foreign Bond Yield			& 1,4,9		\\
+Domestic Interest Rate		& 3,	6,8,9	\\
+Foreign Interest Rate		& 5,6		\\
+Domestic Inflation Rate		& 0,	6		\\
+Foreign Inflation Rate		& 4,5		\\
+Domestic GDP Growth			& 0	\\
+Foreign GDP Growth			& 0		\\
+Domestic Balance of Trade	& 0	\\
+Foreign Balance of Trade		& 0	\\
+Foreign Exchange Reserves	& None		\\
+\end{tabular}
+\label{tab:europe_vars}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Variables and Lags -- Mexico}
+\begin{tabular}{l l}
+Variable 					& Lags  \\
+Exchange Rate 				& 0,2		\\
+Domestic Bond Yield			& 5		\\
+Foreign Bond Yield			& 3,4	\\
+Domestic Interest Rate		& 0,1,5	\\
+Foreign Interest Rate		& 3,5	\\
+Domestic Inflation Rate		& 0,3,5	\\
+Foreign Inflation Rate		& 0,2		\\
+Domestic GDP Growth			& 0		\\
+Foreign GDP Growth			& 0		\\
+Domestic Balance of Trade	& None	\\
+Foreign Balance of Trade		& None	\\
+Foreign Exchange Reserves	& None		\\
+\end{tabular}
+\label{tab:mexico_vars}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Variables and Lags -- Japan}
+\begin{tabular}{l l}
+Variable 					& Lags  \\
+Exchange Rate 				& 0,4,8,9		\\
+Domestic Bond Yield			& 0,4	\\
+Foreign Bond Yield			& None	\\
+Domestic Interest Rate		& 3,6,9	\\
+Foreign Interest Rate		& 2,7,9	\\
+Domestic Inflation Rate		& 0	\\
+Foreign Inflation Rate		& 0,8	\\
+Domestic GDP Growth			& None	\\
+Foreign GDP Growth			& 0		\\
+Domestic Balance of Trade	& 0	\\
+Foreign Balance of Trade		& 0	\\
+Foreign Exchange Reserves	& 0	\\
+\end{tabular}
+\label{tab:japan_vars}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Variables and Lags -- Korea}
+\begin{tabular}{l l}
+Variable 					& Lags  \\
+Exchange Rate 				& 0,6,9		\\
+Domestic Bond Yield			& 0,5	\\
+Foreign Bond Yield			& 8	\\
+Domestic Interest Rate		& 2,6,9	\\
+Foreign Interest Rate		& 7,9	\\
+Domestic Inflation Rate		& 1,3,5,6,9	\\
+Foreign Inflation Rate		& 0,9	\\
+Domestic GDP Growth			& None	\\
+Foreign GDP Growth			& None		\\
+Domestic Balance of Trade	& 0	\\
+Foreign Balance of Trade		& None	\\
+Foreign Exchange Reserves	& 0	\\
+\end{tabular}
+\label{tab:korea_vars}
+\end{figure}
+
+
 
 
 
