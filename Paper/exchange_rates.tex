@@ -108,6 +108,15 @@ This paper restricts its attention to changes in the exchange rate between the U
 
 \section{Exploratory Data Analysis}
 
+\subsection{Stationarity}
+
+\begin{figure}
+\centering
+\caption{Percent Change over Time}
+\includegraphics[scale=0.45]{rates_over_time.pdf}
+\label{fig:rates_time}
+\end{figure}
+
 \subsection{Tests for Autocorrelation}
 Time series data often exhibits autocorrelation. Autocorrelation refers to correlation between values of a variable at different points in time. In order to assess the degree of autocorrelation in the exchange rate data set, we fit a simplified linear model that consisted of the current exchange rate, along with the interest rate, inflation rate and government bond yield for both countries. After fitting the model, we computed the Durbin-Watson test statistic with one to twelve month lags. Figure~\ref{fig:autocorrelation} depicts the value of the correlation coefficient for each country as a function of time.
 \par{} The test statistics show that the data set exhibits strong autocorrelation for several months, and that the severity of the autocorrelation decays over time. For each country, the correlation coefficient for a one month lag is in excess of 0.80, and is as high as 0.95 for Japan. This value drops below 0.50 for every country by month four, with the exception of Japan. The persistence of autocorrelation in the case of Japan may be due to its active currency manipulation policy. For each country, the correlation coefficient remains statistically significant for at least five months. The presence of autocorrelation in the data set argues for including lagged variables in the model, through at least several months.
@@ -115,7 +124,7 @@ Time series data often exhibits autocorrelation. Autocorrelation refers to corre
 \begin{figure}
 \centering
 \caption{Severity of Autocorrelation}
-\includegraphics[scale=0.55]{autocorrelation.pdf}
+\includegraphics[scale=0.45]{autocorrelation.pdf}
 \label{fig:autocorrelation}
 \end{figure}
 

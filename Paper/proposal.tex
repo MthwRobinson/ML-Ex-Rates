@@ -1,0 +1,115 @@
+% This is "sig-alternate.tex" V2.1 April 2013
+% This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
+%
+% This example file demonstrates the use of the 'sig-alternate.cls'
+% V2.5 LaTeX2e document class file. It is for those submitting
+% articles to ACM Conference Proceedings WHO DO NOT WISH TO
+% STRICTLY ADHERE TO THE SIGS (PUBS-BOARD-ENDORSED) STYLE.
+% The 'sig-alternate.cls' file will produce a similar-looking,
+% albeit, 'tighter' paper resulting in, invariably, fewer pages.
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.5) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+% ---------------------------------------------------------------------------------------------------------------
+% This .tex source is an example which *does* use
+% the .bib file (from which the .bbl file % is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission, you *NEED* to 'insert'
+% your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% ================= IF YOU HAVE QUESTIONS =======================
+% Questions regarding the SIGS styles, SIGS policies and
+% procedures, Conferences etc. should be sent to
+% Adrienne Griscti (griscti@acm.org)
+%
+% Technical questions _only_ to
+% Gerald Murray (murray@hq.acm.org)
+% ===============================================================
+%
+% For tracking purposes - this is V2.0 - May 2012
+
+\documentclass{sig-alternate-05-2015}
+\usepackage{amsmath}
+%\usepackage{algorithm}
+\usepackage{algorithm2e}
+\usepackage[noend]{algpseudocode}
+\usepackage{eurosym}
+
+\begin{document}
+
+
+% Copyright
+%setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+\title{{Proposal: Using Machine Learning to Set Exchange Rates for Medium Term Contracts}
+}
+\numberofauthors{2} 
+\author{
+\alignauthor
+Eduardo Lori\'e\\
+       \affaddr{Georgia Institute of Technology}\\
+       \email{edlorie@gatech.edu}
+\alignauthor 
+Matthew Robinson \\
+       \affaddr{Georgia Institute of Technology}\\
+       \email{mrobinson72@gatech.edu}
+}
+
+\date{20 February 2016}
+
+\maketitle
+
+\section{Introduction}
+One of the biggest risks involved with doing business internationally is changes in the exchange rate between the time of the signing of the contract and the times of each payment. Consider the case when a manufacturer in the United States has a contract to build an airplane for a customer in Mexico. When the exchange rate between the Mexican Peso and the US Dollar changes, one of the parties will lose money, since the payment is made in dollars, and the customer must convert a different amount of pesos into dollars to make the payment. In order to avoid this, companies need to have ways to accurately predict future exchange rates in advance and include their findings in contracts.
+\par{} The proposed project addresses the need to accurately predict future exchange rates by testing different machine learning models on financial data. The models consist of methods previously used to predict exchange rates, as well as methods which have not been previously applied to exchange rates. The focus of this project is to determine which combination of features and machine learning techniques gives the most accurate results when predicting exchange rates up to one year in advance.    
+
+\section{Data}
+The data used in this project considers changes in exchange rates between the United States and five of its biggest trading partners. The five trading partners chosen are Europe, Canada, Mexico, Japan, and South Korea. China is excluded from this study because it fixes its exchange rates. Europe refers to the 19 countries that make up the euro-zone and are treated as a single unit in this project because they share the same currency.
+\par{} The data used was obtained through Quandl, an economic data repository. All data used was collected by central banks. The primary variables of interest include the inflation rate, balance of trade, foreign exchange reserves, interest rate, GDP growth rate, current account balance, and foreign direct investment. Each variable is measured for the United States and each of the trading partners chosen. The monthly percent change in exchange rate between the United States and each these trading partners was also recorded. Some variables, such as GDP growth, current account balance, and foreign direct investment were recorded quarterly. Cubic splines were used to interpolate these variables so they can be aligned with the rest of the data.  
+
+\section{Questions}
+This project attempts to determine whether or not a unique combination of features and machine learning methods can outperform previously presented techniques in predicting future exchange rates. In particular, this project seeks to determine if lag variables and ensemble methods, such as random forests, can achieve more accurate results than a random walk, which predicts no change in the exchange rate. The methods tested consist of different forms of regression, as well as different tree based methods. There is also an assumption that looking at lag variables can improve results, so lag variables are recorded up to nine months back.    
+
+\section{Methods And Models}
+The regression models tested in this project are linear regression, ridge regression, LASSO regression, and principal component regression. The regression models will be tested using the full set of variables, with and without the lag variables. The variables will be chosen for the model using forward stepwise variable selection with AIC as the selection criteria. The tree based methods will consist of decision trees using all the variables (including lab variables), trimmed decision trees, decision trees using only variables chosen with AIC, and random forests using both all variables and variables chosen with AIC.     
+\par{} Each model tested will be evaluated by first splitting the data into testing and training subsets. 80\% of the data is going to be used to train the models and the remaining 20\% will be used to test the models. The data used in predicting exchange rates is highly correlated with time. In order to  make sure this feature does not contribute to overfitting, the testing data will consist of a continuous block of time and the data the six months before and after the start of the test block are not used in testing.
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+\end{document}
