@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  30 MAR 2016 14:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  31 MAR 2016 18:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -399,64 +399,82 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <7> not available
 
 
 ]
-<stationarity.pdf, id=18, 505.89pt x 505.89pt>
-File: stationarity.pdf Graphic file (type pdf)
- <use stationarity.pdf>
-Package pdftex.def Info: stationarity.pdf used on input line 116.
-(pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
- [2 <./stationarity.pdf>] <autocorrelation.pdf, id=29, 505.89pt x 505.89pt>
-File: autocorrelation.pdf Graphic file (type pdf)
-
-<use autocorrelation.pdf>
-Package pdftex.def Info: autocorrelation.pdf used on input line 145.
-(pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
- [3 <./autocorrelation.pdf>]
 Underfull \vbox (badness 1558) has occurred while \output is active []
 
 
-<lag1.pdf, id=39, 505.89pt x 505.89pt>
-File: lag1.pdf Graphic file (type pdf)
- <use lag1.pdf>
-Package pdftex.def Info: lag1.pdf used on input line 203.
+<stationarity.pdf, id=18, 505.89pt x 505.89pt>
+File: stationarity.pdf Graphic file (type pdf)
+ <use stationarity.pdf>
+Package pdftex.def Info: stationarity.pdf used on input line 118.
+(pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
+ [2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+<autocorrelation.pdf, id=23, 505.89pt x 505.89pt>
+File: autocorrelation.pdf Graphic file (type pdf)
+ <use autocorrelation.pdf>
+Package pdftex.def Info: autocorrelation.pdf used on input line 147.
 (pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
 
-<lag2.pdf, id=40, 505.89pt x 505.89pt>
+[3 <./stationarity.pdf> <./autocorrelation.pdf>]
+Overfull \hbox (1.71695pt too wide) in paragraph at lines 195--196
+\T1/aer/m/n/9 clude a reg-u-lar-iza-tion con-stant that gives pref-er-ences to 
+mod-
+ []
+
+[4] <lag1.pdf, id=42, 505.89pt x 505.89pt>
+File: lag1.pdf Graphic file (type pdf)
+ <use lag1.pdf>
+Package pdftex.def Info: lag1.pdf used on input line 215.
+(pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
+
+<lag2.pdf, id=43, 505.89pt x 505.89pt>
 File: lag2.pdf Graphic file (type pdf)
  <use lag2.pdf>
-Package pdftex.def Info: lag2.pdf used on input line 210.
+Package pdftex.def Info: lag2.pdf used on input line 222.
 (pdftex.def)             Requested size: 227.64839pt x 227.64839pt.
- [4 <./lag1.pdf>]
-Overfull \hbox (11.60068pt too wide) in paragraph at lines 224--233
+
+Overfull \hbox (11.60068pt too wide) in paragraph at lines 236--245
  [][] 
  []
 
-[5 <./lag2.pdf>] [6] (./exchange_rates.aux) ) 
+[5 <./lag1.pdf> <./lag2.pdf>]
+Overfull \hbox (1.08759pt too wide) in paragraph at lines 259--260
+[]\T1/aer/m/n/9 Future work on this prob-lem might con-sider dif-fer-ent coun-
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+[7] (./exchange_rates.aux) ) 
 Here is how much of TeX's memory you used:
  5120 strings out of 493304
  68204 string characters out of 6139870
- 164733 words of memory out of 5000000
+ 166733 words of memory out of 5000000
  8456 multiletter control sequences out of 15000+600000
  53836 words of font info for 76 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,10n,35p,1476b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fon
-ts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-extra/cmex9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic
-/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on exchange_rates.pdf (6 pages, 203427 bytes).
+ 41i,10n,35p,1344b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base
+/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on exchange_rates.pdf (7 pages, 209485 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
+ 112 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
