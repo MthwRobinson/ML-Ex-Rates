@@ -1,0 +1,8 @@
+Infl: Annualized inflation rate domestic.
+BOT: Balance of trade. Total exports minus total imports. (Don't know units)
+Yield, PrimeRate_d, X1Y_Yield_d: Returns on goverment bonds.
+FER: Foreign exchange reserves.
+Int: Interest rate set by government for loans between banks.
+GDPG: GDP growth between quarters.
+CA: Current Account.
+FDI:Foreign direct investment.
