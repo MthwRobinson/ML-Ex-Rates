@@ -181,7 +181,7 @@ Time series data often exhibits autocorrelation. Autocorrelation refers to corre
 
 \subsection{Variables}
 
-[Add section about correlations, ect here]
+In order to view the correlations between variables correlation matrices were built for each trading partner. The highest correlation between variables observed was with Japan and it was a negative correlation of 0.9 between domestic balance of trade and foreign exchange reserves of Japanese currency held by other countries. Other notably high correlations observed occurred between foreign and domestic interest rates and inflation rates for multiple trading partners. It was also observed that foreign exchange reserves and balance of trade were correlated with interest rates both foreign and domestic. Most of these correlations were between 0.6 and 0.8. All other variables had low correlation with each other with most being under 0.3.   
 
 \section{Methods}
 Constructing a model to predict exchanges requires the consideration of three important factors: which variables to include in the model, candidate methods for estimating the model and the criteria for evaluating each method. The variable selection process involves deciding which predictors to include in the model, as well as how many months of lagged observations to include. Candidate methods were chosen by considering several statistical techniques with properties that made them appealing for the exchange rate data set. These include both linear and tree based methods. Finally, we develop a method for evaluating that models that accounts for autocorrelation and leverages the stationarity of the time series.
@@ -194,7 +194,9 @@ After selecting a suitable subset of variables to include in the model, we fit t
 
 \par{} The linear models include standard linear regression, ridge regression, LASSO regression and principal components regression. Ridge regression and LASSO regression both include a regularization constant that gives preferences to models with smaller parameters in terms of absolute value. These models are appealing for the exchange rate data set because autocorrelation and the inclusion of lagged variables means the predictors in the model are highly correlated. Including a regularization constant helps prevent overfitting to the training data. For both of these models, the regularization constant is chosen using generalized cross validation. Principal component regression is potentially useful due to the large number of predictors in the model and the high correlation between those predictors. The forward stepwise variable selection technique described above results in models with 15-20 predictors, which is relatively complex for a data set that has on the order of hundreds of observations. Principal component regression simplifies the model by considering a low rank approximation of the data set that consists of the $k$ most important principal components. The number of components to include in the principal component regression was also chosen using cross validation. 
 
-\par{} [Paragraph on tree based methods here]
+\par{} The tree based methods considered are full tree models, pruned tree models, and random forests models. The advantage of testing the different tree based methods is to find if this dataset is prone to overfitting with full trees. Regression trees are capable of predicting datasets where there are many features that interact in nonlinear ways. Instead of using nonlinear regression it is useful to recursively partition the data into chunks with each chunk containing it own model. Tree based methods use this recursive partition to learn the data. Each chunk is represented by the nodes, or leaves, of the tree. 
+
+\par{} The problem with trees is that they can become overfitted. One technique commonly employed to avoid this is pruning the tree. Tree pruning is performed by looking at terminal nodes of tree and trying to determine is merging these nodes can decrease the entropy of the parent node, if so the nodes are merged. Another way to avoid overfitting is to use random forests. Random forests is a method which looks at an ensemble of trees and chooses the mean value of all trees when performing regression. This method in turn avoids the high bias that is usually seen with full tree models.
 
 \subsection{Model Evaluation}
 Evaluating the effectiveness each model required splitting the data into training and test sets. In all cases described in this paper, the training set consists of 80\% of the available data, with the remaining allocated to the test set. The technique for splitting the data must account for two significant issues: autocorrelation and the size of the data set.
@@ -223,9 +225,23 @@ An exchange rate prediction model was fitted for each of the methods described a
 \label{fig:lag2}
 \end{figure}
 
-We determined an appropriate lag by comparing the performance of a standard linear regression model across a variety of lags. In order to find the simplest model specification that provides accurate predictions, we chose the lag by finding the point at which including an additional month of lag stops improving the performance of the model. We accomplished this by plotting the mean training error of the model as a function of the lag for each country. These plots appear in Figures ~\ref{fig:lag1} and ~\ref{fig:lag2}. 
+\begin{figure}
+\centering
+\caption{Model Performance for Various Lags}
+\includegraphics[scale=0.45]{ForestLag1.pdf}
+\label{fig:ForestLag1}
+\end{figure}
 
-\par{} The appropriate lag varies by country. Noticeable improvements in the performance of the model cease after month four for Canada and month five for Mexico. The results justify including lagged variables out to nine months for Europe, Japan and Korea. In the case of Korea, the decision to include a lengthy lag on the variables is less clear cut, since the model also performs well with shorter lags. However, the mean testing error decreases by a factor of two after the ninth month is included, making the increased complexity of the model worthwhile.
+\begin{figure}
+\centering
+\caption{Model Performance for Various Lags}
+\includegraphics[scale=0.45]{ForestLag2.pdf}
+\label{fig:ForestLag2}
+\end{figure}
+
+We determined an appropriate lag by comparing the performance of a standard linear regression model across a variety of lags. In order to find the simplest model specification that provides accurate predictions, we chose the lag by finding the point at which including an additional month of lag stops improving the performance of the model. We accomplished this by plotting the mean training error of the model as a function of the lag for each country. These plots appear in Figures ~\ref{fig:lag1}, ~\ref{fig:lag2}, ~\ref{fig:ForestLag1}, and ~\ref{fig:ForestLag2}. 
+
+\par{} The appropriate lag varies by country for linear models. Noticeable improvements in the performance of the model cease after month four for Canada and month five for Mexico. The results justify including lagged variables out to nine months for Europe, Japan and Korea. In the case of Korea, the decision to include a lengthy lag on the variables is less clear cut, since the model also performs well with shorter lags. However, the mean testing error decreases by a factor of two after the ninth month is included, making the increased complexity of the model worthwhile.
 \par{} Including lagged variables results in a large number of possible predictors for each model. Using the lags chosen above, there are 42 possible predictors for the Canada model, 49 for the Mexico model and 77 each for the Europe, Japan and Korea models. The variables used to predict the percent change in the exchange rate were chosen by forward stepwise variable selection, as described in the methods section. These variables and their lags appear in the appendix. Of note is that at least 9 of the 12 variables in the data set appear in each of the final models chosen by forward stepwise variable selection. In addition, each variable appeared in at least two of the models. This indicates that each variable is useful as a predictor of exchange rates, as economic theory suggests they should be.
 
 \subsection{Method Comparison}
@@ -245,10 +261,27 @@ Korea	& 0.00291 	& 0.00293 	& 0.00310 	& 0.00251 	& 0.0128 \\
 \end{figure}
 
 
+
+
 The mean testing errors for the 100 random partitions of the data set appear in Figure~\ref{tab:comparison} for each country and estimation technique. The naive estimate is a random walk and always predicts no change in the exchange rate after one year. This estimate is used as a baseline for assessing the usefulness of the statistical models. Each of the estimation techniques outperformed the random walk. The improvement mean testing error ranged from a factor of two for Japan to a factor of ten for Mexico. For each method, we tested the hypothesis that mean testing error for the model is less than the mean testing error for the random walk using a pairwise two sample t-test. The results were statistically significant at well below the 1\% significance level in each case.
 \par{} A noteworthy observation from the results table is that the mean testing error does not change much when different techniques are used to estimate the model. For each country, we tested the hypothesis that the mean testing errors for the ridge, LASSO and principal component regressions were different than the mean testing error for the standard linear model. Although the differences were statistically significant in some cases, the magnitude of the difference was very small in every case. In practice, this means that each of the models will produce similar results. Since using more sophisticated regression techniques does not improve the performance of the model, these results support estimating the model using a standard linear regression. In fact, the primary difficulty in producing a good model is not selecting the best estimation technique, but rather choosing the correct predictors. While the results were robust to the estimation technique, they were highly sensitive to the variables included in the model, particularly the months of lag. This makes preliminary work to determine a close to optimal lag vital to producing a useful model.
 
-[Results for tree based methods go here]
+\begin{figure}
+\centering
+\caption{Mean Testing Error - Tree Based Methods}
+\begin{tabular}{l l l l l}
+Country	& Full Tree & Pruned    & Forest    & Naive \\
+Canada 	& 0.00739 	& 0.00734 	& 0.00450 	& 0.0063 \\
+Europe	& 0.01856 	& 0.01865 	& 0.01173	& 0.0115 \\
+Mexico	& 0.00707 	& 0.00706 	& 0.00376   & 0.0114 \\
+Japan	& 0.03172 	& 0.03112 	& 0.02006   & 0.0205 \\
+Korea	& 0.01053 	& 0.01001 	& 0.00717	& 0.0128 \\
+\end{tabular}
+\label{tab:treecomparison}
+\end{figure} 
+
+\par{} In contrast to linear models the changes in the lag did not decrease error in the same way for tree based models. It seems the change in error was random for the tree based models as lag variables were added. The change in error also only varied slightly when adding lag variables. The tree based models also performed slightly worse than the linear models. In order to accurately compare the two groups of models the fine tree based models were built using the same variable selection as the final linear models. Figure~\ref{tab:treecomparison} presents the results from these tests. The forest model gave the best result of the tree tree based methods tested. This model outperformed the random walk for all trading partners except for Europe. It also only beat the random walk by a slight margin for Japan. The other tree based methods performed worse for most trading partner when compared to the random walk method. Full tree models and pruned tree models only out performed random walk for Mexico and Korea but the margins were not greater than 0.5\%.   
+
 
 \section{Findings}
 
