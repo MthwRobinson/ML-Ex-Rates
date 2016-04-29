@@ -70,7 +70,7 @@
 \numberofauthors{2} 
 \author{
 \alignauthor
-Eduardo Lorie\\
+Eduardo Lori\'{e}\\
        \affaddr{Georgia Institute of Technology}\\
        \email{edlorie@gatech.edu}
 \alignauthor 
@@ -82,6 +82,9 @@ Matthew Robinson \\
 \date{31 March 2016}
 
 \maketitle
+
+\section{Abstract}
+This paper is focused in analyzing financial variables and machine learning methods to investigate exchange rate forecasting. Financial data is analyzed for five of the biggest US trading partners. This data is tested for its stationarity, analyzed to extract principal components, and it's correlations are investigated as well. Both linear and tree based models are tested using different variations of lag variables to better understand the impact of lags on financial data. These models are compared to the standard used random walk method. Finally an explanation is provided on why some of these methods do or do not outperform the random walk. The hopes of this work is to enable readers how to make good choices when building prediction models for exchange rates.
 
 \section{Introduction}
 International business involves considerable risk. This is especially true for manufacturers, who often make production decisions well in advance of delivery dates. Consider the position of an airline that is preparing to expand its fleet. This airline might place an order for a passenger jet that will not be completed for a year or more, with payment due upon delivery of the jet. If the buyer is American and the manufacturer is also American, this is not a problem. All of the manufacturer's production costs will be valued in US dollars, and the customer will pay in US dollars.
@@ -184,6 +187,13 @@ Another common feature of time series data is autocorrelation. Autocorrelation r
 \centering
 \caption{Balance of Trade and Foreign Exchange Reserves Over Time for Japan}
 \includegraphics[scale=0.45]{japan_plot.pdf}
+\label{fig:japan}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{Standard Deviation of Distribution for Top Ten Components}
+\includegraphics[scale=0.45]{prinComps.pdf}
 \label{fig:japan}
 \end{figure}
 
