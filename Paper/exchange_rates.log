@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  28 APR 2016 20:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.11.27)  28 APR 2016 21:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -451,8 +451,11 @@ Overfull \hbox (11.60068pt too wide) in paragraph at lines 260--269
  [][] 
  []
 
-[6 <./lag1.pdf> <./lag2.pdf>]
-Overfull \hbox (1.08759pt too wide) in paragraph at lines 301--302
+
+Underfull \vbox (badness 1152) has occurred while \output is active []
+
+ [6 <./lag1.pdf> <./lag2.pdf>]
+Overfull \hbox (1.08759pt too wide) in paragraph at lines 300--301
 []\T1/aer/m/n/9 Future work on this prob-lem might con-sider dif-fer-ent coun-
  []
 
@@ -464,7 +467,7 @@ Here is how much of TeX's memory you used:
  8457 multiletter control sequences out of 15000+600000
  53836 words of font info for 76 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,10n,35p,1445b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,10n,35p,1685b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base
 /8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><
@@ -479,7 +482,7 @@ fonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb
 8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on exchange_rates.pdf (7 pages, 221123 bytes).
+Output written on exchange_rates.pdf (7 pages, 222335 bytes).
 PDF statistics:
  119 PDF objects out of 1000 (max. 8388607)
  85 compressed objects within 1 object stream
